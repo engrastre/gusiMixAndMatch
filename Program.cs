@@ -1,780 +1,1511 @@
-﻿using System;
+using System;
 using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 
-namespace guccigangsMixandMatch
+namespace bakitDikamahalngmamamo;
+class Program
 {
-    class Program
+    static void Main(String[] args)
     {
-        static void Main(String[] args)
+        int choose, main, burger,spaghetti, chicken, typeOfside, friesSize, chocoIceCreamSize, chosenJuice;
+        int mainDefaultPrice = 150, bill, sFries = 45, mFries = 55, lFries = 65, sIcecream = 35, mIcecream = 45, lIcecream = 55, juicePrice = 70;
+        var mainBurgers = new List<string>()
+           {"DOUBLE PATTY BURGER", "DOUBLE CHICKEN BURGER", "VEGIE BURGER", "ROYALE BURGER"};
+        var mainSpaghetti = new List<string>()
+        {"REGULAR SPAGHETTI", "SPAGHETTI W/ CHICKEN", "SPAGHETTI W/ REGULAR BURGER" };
+        var mainChicken = new List<string>()
+        {"CHICKEN W/ RICE", "SPICY CHICKEN W/ RICE" };
+        var sides = new List<string>()
+        { "GUCCI FRIES", "CHOCO ICED CREAM"};
+        var sizes = new List<string>()
+             { "SMALL ", "MEDIUM ", "LARGE "};
+        var juiceTypes = new List<string>()
+        {"ORANGE JUICE", "PINEAPPLE JUICE", "ICED TEA" };
+        menu();
+        Console.WriteLine("NOTE: MAIN HAS A FIXED PRICE OF 150.00 WHILE THE SIDE HAS PRICE BASED ON ITS TYPE OR SIZE!");
+        Console.WriteLine("Press 'ENTER' to create your order.");
+        Console.ReadKey();
+        bool proceed = true;
+        while (proceed)
         {
-
-
-            int choose, main, burger, spaghetti, chicken, side, typeOfside, friesSize, iceCreamsize, pay,
-            bill, payment, change, mainPrice = 150, smallFries = 45, mediumFries = 55, largeFries = 65, smallIcecream = 35, mediumIcecream = 40, largeIcecream = 45, chocoFloatPrice = 55, cokeFloatPrice = 60, icedTeaPrice = 40, icedCoffeePrice = 50, cokePrice = 25, pineAppleJuicePrice = 25;
-            string mainBurger1 = "DOUBLE PATTY BURGER", mainBurger2 = "DOUBLE CHICKEN BURGER", mainBurger3 = "VEGGIE BURGER", mainBurger4 = "ROYALE BURGER",
-                  sideFries = "GUCCIFRIES", sideIcecream = "ICE CREAM", sideBeverage = "BEVERAGE", copyOfreceipt, mainSpaghetti = "SPAGHETTI ", mainSpaghetti2 = "SPAGHETTI w/ chicken",
-                  mainChicken = "CHICKEN w/ 1pc of PATTY BURGER", mainChicken2 = "CHICKEN w/ RICE", sideBeverageChocoFloat = "CHOCO FLOAT", sideBeverageCokeFloat = "CHOKE FLOAT", sideBeverageIcedTea = "ICED TEA", sideBeverageIcedCoffe = "CHOCO FLOAT", sideBeverageCoke = "COKE", sideBeveragePaJuice = "PINEAPPLE JUICE";
-
-            Console.WriteLine(" ***************-WELCOME TO GUCCIGANGS MIX AND MATCH-***************");
-            Console.WriteLine();
-            Console.WriteLine("                    GUCCIGANG'S MIX AND MATCH!");
-            Console.WriteLine("--------------------------------------------------------------------");
-            Console.WriteLine("Step 1: CHOOSE YOUR MAIN w/a fixed price of 150 pesos only!");
-            Console.WriteLine();
-            Console.WriteLine("           BURGER              SPAGHETTI                 CHICKEN");
-            Console.WriteLine("--------------------------------------------------------------------");
-            Console.WriteLine("Step 2: CHOOSE YOUR SIDE");
-            Console.WriteLine();
-            Console.WriteLine("           FRIES               ICE CREAM                 BEVERAGE  ");
-            Console.WriteLine("--------------------------------------------------------------------");
-            Console.WriteLine();
-            Console.WriteLine("NOTE: MAIN HAS A FIXED PRICE OF 150.00 WHILE THE SIDE HAS PRICE BASED ON ITS TYPE OR SIZE!");
-            Console.WriteLine("Press 'ENTER' to create your order.");
-            Console.ReadKey();
-            bool proceed = true;
-            while (proceed)
+        Console.WriteLine();
+        Console.WriteLine("To make an order press 1.");
+        Console.WriteLine("To exit press 0 or any number.");
+        Console.Write("Enter your choice: ");
+        choose = Convert.ToInt32(Console.ReadLine());
+       
+            if (choose == 0)
             {
-                Console.WriteLine();
-                Console.WriteLine("To make an order press 1 or 0 to exit."); ;
-                Console.Write("Enter your choice: ");
-                choose = Convert.ToInt32(Console.ReadLine());
-                if (choose == 0)
+                exit(choose);
+                break;
+            }
+           else if (choose == 1)
+            {
+                choosingMain();
+                Console.Write("Select your MAIN: ");
+                main = Convert.ToInt32(Console.ReadLine());
+                if (main == 1)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("Thanks for visiting us! \nWe will wait for you to comeback.");
-                }
-
-                else if (choose == 1)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("MAIN HAS A FIXED PRICE OF 150.00");
-                    Console.WriteLine("Step 1 choose your MAIN: ");
-                    Console.WriteLine("---------------------------------");
-                    Console.WriteLine("  BURGER      SPAGHETTI   CHICKEN");
-                    Console.WriteLine("---------------------------------");
-                    Console.WriteLine("Press 1 for BURGER");
-                    Console.WriteLine("Press 2 for SPAGHETTI");
-                    Console.WriteLine("Press 3 for CHICKEN");
-                    Console.WriteLine();
-                    Console.Write("Select your MAIN: ");
-                    main = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine();
-
-                    switch (main)
+                    burgerMain();
+                    burger = Convert.ToInt32(Console.ReadLine());
+                    if (burger == 1)
                     {
-                        case 1:
-                            Console.WriteLine("==================================");
-
-                            Console.WriteLine("   b1 - DOUBLE PATTY BURGER ");
-                            Console.WriteLine("   b2 - DOUBLE CHICKEN BURGER");
-                            Console.WriteLine("   b3 - VEGGIE BURGER");
-                            Console.WriteLine("   b4 - ROYALE BURGER");
-                            Console.WriteLine("==================================");
-                            Console.WriteLine("Press 1 for b1 ");
-                            Console.WriteLine("Press 2 for b2 ");
-                            Console.WriteLine("Press 3 for b3 ");
-                            Console.WriteLine("Press 4 for b4 ");
-                            Console.WriteLine();
-                            Console.Write("Choose your burger: ");
-                            burger = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine();
-
-                            if (burger == 1)
-                            {
-                                Console.WriteLine("---------------------------------------");
-                                Console.WriteLine("   Your main is DOUBLE PATTY BURGER");
-                                Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainBurgers[0]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
-                                Console.Write("You are now going to select your Side. \n Press 1 to 'Continue': ");
-                                side = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-
-                                switch (side)
+                                if (friesSize == 1)
                                 {
-                                    case 1:
-                                        Console.WriteLine("---------------------------------");
-                                        Console.WriteLine("Step 2 choose your SIDE: ");
-                                        Console.WriteLine("  FRIES       ICE CREAM   BEVERAGE  ");
-                                        Console.WriteLine("---------------------------------");
-                                        Console.WriteLine("Press 1 for Fries");
-                                        Console.WriteLine("Press 2 for Icream");
-                                        Console.WriteLine("Press 3 for BEVERAGE");
-                                        Console.WriteLine();
-                                        Console.Write("Choose your Side: ");
-                                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                                        Console.WriteLine();
-
-
-                                        if (typeOfside == 1)
-                                        {
-                                            Console.WriteLine("What is the size of your GUCCIFRIES?");
-                                            Console.WriteLine("=======================================");
-                                            Console.WriteLine("Size:            Price:");
-                                            Console.WriteLine("SMALL            45.00");
-                                            Console.WriteLine("MEDIUM           55.00");
-                                            Console.WriteLine("LARGE            65.00");
-                                            Console.WriteLine("========================================");
-                                            Console.WriteLine("Press  1 for small.");
-                                            Console.WriteLine("Press  2 for medium.");
-                                            Console.WriteLine("Press  3 for large.");
-                                            Console.WriteLine();
-                                            Console.Write("Select the size of your fries: ");
-                                            friesSize = Convert.ToInt32(Console.ReadLine());
-                                            Console.WriteLine();
-
-                                            switch (friesSize)
-                                            {
-                                                case 1:
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine("Your GUCCIFRIES is small.");
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine();
-                                                    Console.Write("Press 1 to Continue: ");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-
-                                                    while (proceed)
-                                                    {
-                                                        if (pay == 1)
-                                                        {
-                                                            bill = mainPrice + smallFries;
-                                                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                            Console.WriteLine("Your select " + mainBurger1 + " and small " + sideFries + " with a total of " + bill + ".00 pesos only.");
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Enter your payment below.");
-                                                            Console.WriteLine("-----------------------");
-                                                            Console.Write("PHP: ");
-                                                            payment = Convert.ToInt32(Console.ReadLine());
-                                                            Console.WriteLine("-----------------------");
-                                                            change = payment - bill;
-                                                            Console.Write("Change: " + change);
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                            copyOfreceipt = Console.ReadLine();
-                                                            Console.WriteLine();
-                                                            while (proceed)
-                                                            {
-                                                                if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!");
-
-                                                                    Console.WriteLine();
-                                                                }
-
-                                                                else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                                {
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("                                     RECEIPT");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                                    Console.WriteLine("         " + mainBurger1 + "                                    " + mainPrice + ".00");
-                                                                    Console.WriteLine("         " + sideFries + "                   small                     " + smallFries + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                                    Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                                    Console.WriteLine("Change                                                       : " + change + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("Thanks! for your order.");
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine();
-                                                                    break;
-
-                                                                }
-
-
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!\n We will wait for you to comeback!");
-                                                                    Console.WriteLine();
-                                                                }
-                                                                break;
-
-                                                            }
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Sorry but we cannot cancel your oder.");
-                                                            Console.WriteLine("Kindly, Press 1 to finished your payment.");
-                                                            pay = Convert.ToInt32(Console.ReadLine());
-                                                        }
-                                                        break;
-                                                    }
-
-
-                                                    break;
-                                                case 2:
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine("Your GUCCIFRIES is medium.");
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine();
-                                                    Console.Write("Press 1 to Continue: ");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-
-                                                    while (proceed)
-                                                    {
-                                                        if (pay == 1)
-                                                        {
-                                                            bill = mainPrice + mediumFries;
-                                                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                            Console.WriteLine("Your select " + mainBurger1 + " and medium " + sideFries + " with a total of " + bill + ".00 pesos only.");
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Enter your payment below.");
-                                                            Console.WriteLine("-----------------------");
-                                                            Console.Write("PHP: ");
-                                                            payment = Convert.ToInt32(Console.ReadLine());
-                                                            Console.WriteLine("-----------------------");
-                                                            change = payment - bill;
-                                                            Console.Write("Change: " + change);
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                            copyOfreceipt = Console.ReadLine();
-                                                            Console.WriteLine();
-                                                            while (proceed)
-                                                            {
-                                                                if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!");
-
-                                                                    Console.WriteLine();
-                                                                }
-
-                                                                else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                                {
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("                                     RECEIPT");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                                    Console.WriteLine("         " + mainBurger1 + "                                    " + mainPrice + ".00");
-                                                                    Console.WriteLine("         " + sideFries + "                  medium                     " + mediumFries + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                                    Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                                    Console.WriteLine("Change                                                       : " + change + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("Thanks! for your order.");
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine();
-                                                                    break;
-
-                                                                }
-
-
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!\n We will wait for you to comeback!");
-                                                                    Console.WriteLine();
-                                                                }
-                                                                break;
-
-                                                            }
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Sorry but we cannot cancel your oder.");
-                                                            Console.WriteLine("Kindly, Press 1 to finished your payment.");
-                                                            pay = Convert.ToInt32(Console.ReadLine());
-                                                        }
-                                                        break;
-                                                    }
-
-
-                                                    break;
-                                                case 3:
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine("Your GUCCIFRIES is large.");
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine();
-                                                    Console.Write("Press 1 to Continue: ");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-
-                                                    while (proceed)
-                                                    {
-                                                        if (pay == 1)
-                                                        {
-                                                            bill = mainPrice + largeFries;
-                                                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                            Console.WriteLine("Your select " + mainBurger1 + " and large " + sideFries + " with a total of " + bill + ".00 pesos only.");
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Enter your payment below.");
-                                                            Console.WriteLine("-----------------------");
-                                                            Console.Write("PHP: ");
-                                                            payment = Convert.ToInt32(Console.ReadLine());
-                                                            Console.WriteLine("-----------------------");
-                                                            change = payment - bill;
-                                                            Console.Write("Change: " + change);
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                            copyOfreceipt = Console.ReadLine();
-                                                            Console.WriteLine();
-                                                            while (proceed)
-                                                            {
-                                                                if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!");
-
-                                                                    Console.WriteLine();
-                                                                }
-
-                                                                else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                                {
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("                                     RECEIPT");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                                    Console.WriteLine("         " + mainBurger1 + "                                    " + mainPrice + ".00");
-                                                                    Console.WriteLine("         " + sideFries + "                   large                     " + largeFries + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                                    Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                                    Console.WriteLine("Change                                                       : " + change + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("Thanks! for your order.");
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine();
-                                                                    break;
-
-                                                                }
-
-
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!\n We will wait for you to comeback!");
-                                                                    Console.WriteLine();
-                                                                }
-                                                                break;
-
-                                                            }
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Sorry but we cannot cancel your oder.");
-                                                            Console.WriteLine("Kindly, Press 1 to finished your payment.");
-                                                            pay = Convert.ToInt32(Console.ReadLine());
-                                                        }
-                                                        break;
-                                                    }
-
-
-                                                    break;
-
-
-
-                                            }
-
-
-
-
-
-
-
-
-                                        }
-                                        else if (typeOfside == 2)
-                                        {
-                                            Console.WriteLine();
-                                            Console.WriteLine("What the size of your CHOCO ICECREAM");
-                                            Console.WriteLine("=======================================");
-                                            Console.WriteLine("Size:            Price:");
-                                            Console.WriteLine("SMALL            35.00");
-                                            Console.WriteLine("MEDIUM           40.00");
-                                            Console.WriteLine("LARGE            45.00");
-                                            Console.WriteLine("========================================");
-                                            Console.WriteLine("Press  1 for small.");
-                                            Console.WriteLine("Press  2 for medium.");
-                                            Console.WriteLine("Press  3 for large.");
-                                            Console.WriteLine();
-                                            Console.Write("Select the size of icecream: ");
-                                            iceCreamsize = Convert.ToInt32(Console.ReadLine());
-                                            Console.WriteLine();
-
-                                            switch (iceCreamsize)
-                                            {
-
-                                                case 1:
-                                                    Console.WriteLine("===============================");
-                                                    Console.WriteLine(" Your choco ICE CREAM is small.");
-                                                    Console.WriteLine("===============================");
-                                                    Console.WriteLine();
-                                                    Console.WriteLine("Press 1 to Continue");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-                                                    while (proceed)
-                                                    {
-                                                        if (pay == 1)
-                                                        {
-                                                            bill = mainPrice + smallIcecream;
-                                                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                            Console.WriteLine("Your select " + mainBurger1 + " and small " + sideIcecream + " with a total of " + bill + ".00 pesos only.");
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Enter your payment below.");
-                                                            Console.WriteLine("-----------------------");
-                                                            Console.Write("PHP: ");
-                                                            payment = Convert.ToInt32(Console.ReadLine());
-                                                            Console.WriteLine("-----------------------");
-                                                            change = payment - bill;
-                                                            Console.Write("Change: " + change);
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                            copyOfreceipt = Console.ReadLine();
-                                                            Console.WriteLine();
-                                                            while (proceed)
-                                                            {
-                                                                if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!");
-
-                                                                    Console.WriteLine();
-                                                                }
-
-                                                                else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                                {
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("                                     RECEIPT");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                                    Console.WriteLine("         " + mainBurger1 + "                                    " + mainPrice + ".00");
-                                                                    Console.WriteLine("         " + sideIcecream + "                         small                " + smallIcecream + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                                    Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                                    Console.WriteLine("Change                                                       : " + change + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("Thanks! for your order.");
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine();
-                                                                    break;
-
-                                                                }
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!\n We will wait for you to comeback!");
-                                                                    Console.WriteLine();
-                                                                }
-                                                                break;
-
-                                                            }
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Sorry but we cannot cancel your oder.");
-                                                            Console.WriteLine("Kindly, Press 1 to finished your payment.");
-                                                            pay = Convert.ToInt32(Console.ReadLine());
-                                                        }
-
-
-                                                        break;
-                                                    }
-
-
-                                                    break;
-                                                case 2:
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine("   Your ICE CREAM is medium.");
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine();
-                                                    Console.Write("Press 1 to Continue: ");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-
-                                                    
-                                                        if (pay == 1)
-                                                        {
-                                                            bill = mainPrice + mediumIcecream;
-                                                            Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                            Console.WriteLine("Your select " + mainBurger1 + " and medium " + sideIcecream + " with a total of " + bill + ".00 pesos only.");
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Enter your payment below.");
-                                                            Console.WriteLine("-----------------------");
-                                                            Console.Write("PHP: ");
-                                                            payment = Convert.ToInt32(Console.ReadLine());
-                                                            Console.WriteLine("-----------------------");
-                                                            change = payment - bill;
-                                                            Console.Write("Change: " + change);
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                            copyOfreceipt = Console.ReadLine();
-                                                            Console.WriteLine();
-                                                            
-                                                            
-                                                                if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!");
-
-                                                                    Console.WriteLine();
-                                                                }
-
-                                                                else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                                {
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("                                     RECEIPT");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                                    Console.WriteLine("         " + mainBurger1 + "                                    " + mainPrice + ".00");
-                                                                    Console.WriteLine("         " + sideIcecream + "                  medium                      " + mediumIcecream + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                                    Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                                    Console.WriteLine("Change                                                       : " + change + ".00");
-                                                                    Console.WriteLine("=============================================================================");
-                                                                    Console.WriteLine();
-                                                                    Console.WriteLine("Thanks! for your order.");
-                                                                    Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                    Console.WriteLine();
-                                                                    break;
-
-                                                                }
-
-
-                                                                else
-                                                                {
-                                                                    Console.WriteLine("Thanks for your order!\n We will wait for you to comeback!");
-                                                                    Console.WriteLine();
-                                                                }
-                                                                break;
-
-                                                            
-
-
-                                                        }
-                                                        else
-                                                        {
-                                                            Console.WriteLine();
-                                                            Console.WriteLine("Sorry but we cannot cancel your oder.");
-                                                            Console.WriteLine("Kindly, Press 1 to finished your payment.");
-                                                            pay = Convert.ToInt32(Console.ReadLine());
-                                                        }
-                                                        break;
-                                                    
-
-
-                                                    break;
-                                                case 3:
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine("Your ICE CREAM is large.");
-                                                    Console.WriteLine("-------------------------------.");
-                                                    Console.WriteLine();
-                                                    Console.Write("Press 1 to Continue: ");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-                                                    if (pay == 1)
-                                                    {
-                                                        bill = mainPrice + largeIcecream;
-                                                        Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                        Console.WriteLine("Your select " + mainBurger1 + " and large " + sideIcecream + " with a total of " + bill + ".00 pesos only.");
-                                                        Console.WriteLine();
-                                                        Console.WriteLine("Enter your payment below.");
-                                                        Console.WriteLine("-----------------------");
-                                                        Console.Write("PHP: ");
-                                                        payment = Convert.ToInt32(Console.ReadLine());
-                                                        Console.WriteLine("-----------------------");
-                                                        change = payment - bill;
-                                                        Console.Write("Change: " + change);
-                                                        Console.WriteLine();
-                                                        Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                        copyOfreceipt = Console.ReadLine();
-                                                        Console.WriteLine();
-                                                        while (proceed)
-                                                        {
-                                                            if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                            {
-                                                                Console.WriteLine("Thanks for your order!");
-
-                                                                Console.WriteLine();
-                                                            }
-
-                                                            else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                            {
-                                                                Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                                Console.WriteLine();
-                                                                Console.WriteLine("=============================================================================");
-                                                                Console.WriteLine("                                     RECEIPT");
-                                                                Console.WriteLine("=============================================================================");
-                                                                Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                                Console.WriteLine("         " + mainBurger1 + "                                    " + mainPrice + ".00");
-                                                                Console.WriteLine("         " + sideIcecream + "                   large                     " + largeIcecream + ".00");
-                                                                Console.WriteLine("=============================================================================");
-                                                                Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                                Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                                Console.WriteLine("Change                                                       : " + change + ".00");
-                                                                Console.WriteLine("=============================================================================");
-                                                                Console.WriteLine();
-                                                                Console.WriteLine("Thanks! for your order.");
-                                                                Console.WriteLine("-----------------------------------------------------------------------------");
-                                                                Console.WriteLine();
-                                                                break;
-
-                                                            }
-
-
-                                                            else
-                                                            {
-                                                                Console.WriteLine("Thanks for your order!\n We will wait for you to comeback!");
-                                                                Console.WriteLine();
-                                                            }
-                                                            break;
-
-                                                        }
-
-
-                                                    }
-                                                    else
-                                                    {
-                                                        Console.WriteLine();
-                                                        Console.WriteLine("Sorry but we cannot cancel your oder.");
-                                                        Console.WriteLine("Kindly, Press 1 to finished your payment.");
-                                                        pay = Convert.ToInt32(Console.ReadLine());
-                                                    }
-
-                                                    break;
-                                            }
-                                        }
-
-                                        else if (typeOfside == 3)
-                                        {
-                                            Console.WriteLine();
-                                            Console.WriteLine("                                            BEVERAGE                                        ");
-                                            Console.WriteLine("============================================================================================");
-                                            Console.WriteLine("CHOCO FLOAT    PHP 55.00       ICED TEA      PHP 40.00         COKE               PHP 25.00");
-                                            Console.WriteLine("COKE FLOAT     PHP 60.00       ICED COFFEE   PHP 50.00         PINEAPPLE JUICE    PHP 25.00");
-                                            Console.WriteLine("============================================================================================");
-                                            Console.WriteLine();
-                                            Console.WriteLine("Press  2 for coke float");
-                                            Console.WriteLine("Press  3 for iced tea");
-                                            Console.WriteLine("Press  4 for iced coffee");
-                                            Console.WriteLine("Press  5 for coke");
-                                            Console.WriteLine("Press  6 for pineapple juice");
-                                            Console.WriteLine();
-                                            Console.WriteLine("Your beverage: ");
-                                            iceCreamsize = Convert.ToInt32(Console.ReadLine());
-
-                                            switch (iceCreamsize)
-                                            {
-
-                                                case 1:
-                                                    Console.WriteLine();
-                                                    Console.WriteLine("==========================================");
-                                                    Console.WriteLine(" Your choose CHOCO FLOAT as your beverage.");
-                                                    Console.WriteLine("===========================================");
-                                                    Console.Write("Press 1 to Continue: ");
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-                                                    bill = mainPrice + smallFries;
-                                                    pay = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine();
-
-
-                                                    if (pay == 1)     
-                                                    Console.WriteLine("------------------------------------------------------------------------------------------------------------------");
-                                                    Console.WriteLine("Your select " + mainBurger2 + " and small " + sideFries + " with a total of " + bill + ".00 pesos only.");
-                                                    Console.WriteLine();
-                                                    Console.WriteLine("Enter your payment below.");
-                                                    Console.WriteLine("-----------------------");
-                                                    Console.Write("PHP: ");
-                                                    payment = Convert.ToInt32(Console.ReadLine());
-                                                    Console.WriteLine("-----------------------");
-                                                    change = payment - bill;
-                                                    Console.Write("Change: " + change);
-                                                    Console.WriteLine();
-                                                    Console.WriteLine("Do you want to have a copy of your receipt? (y/n): ");
-                                                    copyOfreceipt = Console.ReadLine();
-                                                    Console.WriteLine();
-                                                    if (copyOfreceipt == "n" || copyOfreceipt == "N")
-                                                    {
-                                                        Console.WriteLine("Thanks for your order!");
-
-                                                        Console.WriteLine();
-                                                    }
-
-                                                    else if (copyOfreceipt == "y" || copyOfreceipt == "Y")
-                                                    {
-                                                        Console.WriteLine("-----------------------------------------------------------------------------");
-                                                        Console.WriteLine("                                 GUCCIGANG MIX AND MATCH      ");
-                                                        Console.WriteLine();
-                                                        Console.WriteLine("=============================================================================");
-                                                        Console.WriteLine("                                     RECEIPT");
-                                                        Console.WriteLine("=============================================================================");
-                                                        Console.WriteLine("YOUR GUCCIGANG'S PARTNERS:                              PRICE :");
-                                                        Console.WriteLine("         " + mainBurger1 + "                                  " + mainPrice + ".00");
-                                                        Console.WriteLine("         " + side + "                   small                     " + smallFries + ".00");
-                                                        Console.WriteLine("=============================================================================");
-                                                        Console.WriteLine("Total                                                        : " + bill + ".00");
-                                                        Console.WriteLine("Payment                                                      : " + payment + ".00");
-                                                        Console.WriteLine("Change                                                       : " + change + ".00");
-                                                        Console.WriteLine("=============================================================================");
-                                                        Console.WriteLine();
-                                                        Console.WriteLine("Thanks! for your order.");
-                                                        Console.WriteLine("-----------------------------------------------------------------------------");
-                                                        Console.WriteLine();
-                                                        break;
-
-                                                    }
-
-
-
-
-                                                    break;
-
-                                                    // dito
-                                            }
-                                            break;
-                                        }
-                                        break;
-
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
                                 }
-                            
-                               
-                            }
-                            else
-                            {
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
-                                Console.WriteLine("Press 1 to order.");
-                                Console.WriteLine("Press 0 to exit.");
-                                Console.Write("Enter your choice: ");
-                                choose = Convert.ToInt32(Console.ReadLine());
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
 
-                            }
-                     break;
+                                break;
+                        }
+
+
+
+                    }
+                    else if (burger == 2)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainBurgers[1]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                        }
+                    }
+                    else if (burger == 3)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainBurgers[2]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[2]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[2]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[2]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                        }
+
+
+                    }
+                    else if (burger == 4)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainBurgers[3]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[3]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[3]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainBurgers[3]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Opps..Invalid input");
+                        Console.Write("Select your burger: ");
+                        burger = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
                     }
                 }
+                else if (main == 2)
+                {
+                    spaghettiMain();
+                    spaghetti = Convert.ToInt32(Console.ReadLine());
+                    if (spaghetti == 1)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainSpaghetti[0]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+
+                                break;
+                        }
+
+
+                    }
+                    else if (spaghetti == 2)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainSpaghetti[1]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+
+                                break;
+                        }
+                    }
+                    else if (spaghetti == 3)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainSpaghetti[2]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainSpaghetti[2]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Opps..Invalid Input");
+                        Console.Write("Select your spaghetti: ");
+                        spaghetti = Convert.ToInt32(Console.ReadLine());
+                    }
+                }
+                else if (main == 3)
+                {
+                    chickenMain();
+                    chicken =Convert.ToInt32(Console.ReadLine());
+                    if (chicken == 1)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainChicken[0]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[0]+ ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainChicken[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainChicken[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainChicken[0]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+
+                                break;
+                        }
+                    }
+                    else if (chicken == 2)
+                    {
+                        Console.WriteLine("---------------------------------------");
+                        Console.WriteLine("Your main is " + mainChicken[1]);
+                        Console.WriteLine("---------------------------------------");
+                        sideChoice();
+                        Console.Write("Choose your Side: ");
+                        typeOfside = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine();
+                        switch (typeOfside)
+                        {
+                            case 1:
+                                sideFries();
+                                friesSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (friesSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (friesSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lFries;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 2:
+                                sideIcecream();
+                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chocoIceCreamSize == 1)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + sIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 2)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + mIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chocoIceCreamSize == 3)
+                                {
+                                    Console.WriteLine("=========================================");
+                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
+                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
+                                    Console.WriteLine("-----------------------------------------");
+                                    bill = mainDefaultPrice + lIcecream;
+                                    Console.WriteLine("Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opps..Invalid input.");
+                                    Console.Write("Select size: ");
+                                    friesSize = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+                                break;
+                            case 3:
+                                sideJuice();
+                                chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+                                if (chosenJuice == 1)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainChicken[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 2)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainChicken[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else if (chosenJuice == 3)
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("Your main is " + mainChicken[1]);
+                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
+                                    Console.WriteLine("--------------------------------------------");
+                                    bill = mainDefaultPrice + juicePrice;
+                                    Console.WriteLine(" Your bill total is: " + bill);
+                                    payment(bill);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oops.. invalid input! ");
+                                    Console.WriteLine("Select your juice: ");
+                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
+                                    Console.WriteLine();
+                                }
+
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Opps..Invalid Input");
+                        Console.Write("Select your chicken: ");
+                        chicken = Convert.ToInt32(Console.ReadLine());
+                    }
+                }
+
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Opps..Invalid Input");
+                    Console.Write("Select Main: ");
+                    main = Convert.ToInt32(Console.ReadLine());
+
+                }
+          
+
+            }
+            else
+            {
+                Console.WriteLine("Opps..Invalid Input");
+                Console.Write("Enter your choice: ");
+                choose = Convert.ToInt32(Console.ReadLine());
             }
         }
+
+    }
+
+    static void menu()
+    {
+        Console.WriteLine(" ***************-WELCOME TO GUCCIGANGS MIX AND MATCH-***************");
+        Console.WriteLine();
+        Console.WriteLine("                    GUCCIGANG'S MIX AND MATCH!");
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.WriteLine("Step 1: CHOOSE YOUR MAIN w/a fixed price of 150 pesos only!");
+        Console.WriteLine();
+        Console.WriteLine("           BURGER              SPAGHETTI                 CHICKEN");
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.WriteLine("Step 2: CHOOSE YOUR SIDE");
+        Console.WriteLine();
+        Console.WriteLine("           FRIES               ICE CREAM                 BEVERAGE  ");
+        Console.WriteLine("--------------------------------------------------------------------");
+    }
+
+    static void choosingMain()
+    {
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.WriteLine("Step 1: CHOOSE YOUR MAIN w/a fixed price of 150 pesos only!");
+        Console.WriteLine();
+        Console.WriteLine("           BURGER              SPAGHETTI                 CHICKEN");
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.WriteLine("Press 1 for Burger.");
+        Console.WriteLine("Press 2 for Spaghetti.");
+        Console.WriteLine("Press 3 for Chicken.");
+    }
+    static void exit(int choose)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Thanks for visiting us! \nWe will wait for you to comeback.");
+        Console.WriteLine();
+
+    }
+    static void burgerMain()
+    {
+
+        Console.WriteLine("==================================");
+        Console.WriteLine("   b1 - DOUBLE PATTY BURGER ");
+        Console.WriteLine("   b2 - DOUBLE CHICKEN BURGER");
+        Console.WriteLine("   b3 - VEGGIE BURGER");
+        Console.WriteLine("   b4 - ROYALE BURGER");
+        Console.WriteLine("==================================");
+        Console.WriteLine("Press 1 for b1 ");
+        Console.WriteLine("Press 2 for b2 ");
+        Console.WriteLine("Press 3 for b3 ");
+        Console.WriteLine("Press 4 for b4 ");
+        Console.Write("Select your burger: ");
+
+
+    }
+    static void spaghettiMain()
+    {
+        Console.WriteLine("==================================");
+        Console.WriteLine("   s1 - REGULAR SPAGHETTI");
+        Console.WriteLine("   s2 - SPAGHETTI W/ CHICKEN");
+        Console.WriteLine("   s3 - SPAGHETTI W/ REGULAR BURGER");
+        Console.WriteLine("==================================");
+        Console.WriteLine("Press 1 for s1 ");
+        Console.WriteLine("Press 2 for s2 ");
+        Console.WriteLine("Press 3 for s3 ");
+        Console.Write("Select your spaghetti: ");
+    }
+    static void chickenMain()
+    {
+        Console.WriteLine("==================================");
+        Console.WriteLine("   c1 - CHICKEN W/ RICE ");
+        Console.WriteLine("   c2 -SPICY CHICKEN W/ RICE");
+        Console.WriteLine("==================================");
+        Console.WriteLine("Press 1 for c1 ");
+        Console.WriteLine("Press 2 for c2 ");
+        Console.Write("Select your chicken: ");
+    }
+    static void sideChoice()
+    {
+        Console.Write("You are now going to select your Side. \n Press 1 to 'Continue': ");
+        int side = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine();
+        Console.WriteLine("---------------------------------");
+        Console.WriteLine("Step 2 choose your SIDE: ");
+        Console.WriteLine("  FRIES       ICE CREAM   BEVERAGE  ");
+        Console.WriteLine("---------------------------------");
+        Console.WriteLine("Press 1 for Fries");
+        Console.WriteLine("Press 2 for Icream");
+        Console.WriteLine("Press 3 for BEVERAGE");
+    }
+    static void sideFries()
+    {
+        Console.WriteLine("YOU CHOOSE GUCCI FRIES AS YOUR SIDE.");
+        Console.WriteLine("=======================================");
+        Console.WriteLine("Size:            Price:");
+        Console.WriteLine("SMALL            45.00");
+        Console.WriteLine("MEDIUM           55.00");
+        Console.WriteLine("LARGE            65.00");
+        Console.WriteLine("========================================");
+        Console.WriteLine("Press  1 for small.");
+        Console.WriteLine("Press  2 for medium.");
+        Console.WriteLine("Press  3 for large.");
+        Console.Write("Select size: ");
+    }
+    static void sideIcecream()
+    {
+        Console.WriteLine("YOU CHOCO ICE CREAM AS YOUR SIDE.");
+        Console.WriteLine("=======================================");
+        Console.WriteLine("Size:            Price:");
+        Console.WriteLine("SMALL            35.00");
+        Console.WriteLine("MEDIUM           45.00");
+        Console.WriteLine("LARGE            55.00");
+        Console.WriteLine("========================================");
+        Console.WriteLine("Press  1 for small.");
+        Console.WriteLine("Press  2 for medium.");
+        Console.WriteLine("Press  3 for large.");
+        Console.WriteLine();
+        Console.Write("Select size: ");
+    }
+    static void sideJuice()
+    {
+        Console.WriteLine("CHOOSE ANY OF THESE JUICES AS YOUR SIDE.");
+        Console.WriteLine("===================================");
+        Console.WriteLine("                             Price:");
+        Console.WriteLine("ORANGE JUICE       500ml     70.00");
+        Console.WriteLine("PINEAPPLE JUICE    500ml     70.00");
+        Console.WriteLine("ICED TEA           500ml     70.00");
+        Console.WriteLine("====================================");
+        Console.WriteLine("Press 1 for ORANGE JUICE");
+        Console.WriteLine("Press 2 for PINEAPPLE JUICE");
+        Console.WriteLine("Press 3 for ICED TEA");
+    }
+    static void payment(int bill)
+    {
+        Console.Write("Enter your payment: ");
+        int payment = Convert.ToInt32(Console.ReadLine());
+        int change = payment - bill;
+        Console.WriteLine("Change: " + change);
+        Console.WriteLine("=========================================");
+        Console.WriteLine("Thanks for your order!");
+        Console.WriteLine();
     }
 }
+
+
+
+
