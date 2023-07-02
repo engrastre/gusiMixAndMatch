@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.Design;
 using System.Drawing;
 
-namespace bakitDikamahalngmamamo;
+namespace gusiMixAndMatch;
 class Program
 {
     static void Main(String[] args)
