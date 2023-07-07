@@ -1,1511 +1,3507 @@
 using System;
-using System.ComponentModel.Design;
-using System.Drawing;
-
-namespace gusiMixAndMatch;
-class Program
-{
-    static void Main(String[] args)
+namespace gusiMixAndMatchSystem;
+class Program {
+    static void Main(string[] args)
     {
-        int choose, main, burger,spaghetti, chicken, typeOfside, friesSize, chocoIceCreamSize, chosenJuice;
-        int mainDefaultPrice = 150, bill, sFries = 45, mFries = 55, lFries = 65, sIcecream = 35, mIcecream = 45, lIcecream = 55, juicePrice = 70;
-        var mainBurgers = new List<string>()
-           {"DOUBLE PATTY BURGER", "DOUBLE CHICKEN BURGER", "VEGIE BURGER", "ROYALE BURGER"};
-        var mainSpaghetti = new List<string>()
-        {"REGULAR SPAGHETTI", "SPAGHETTI W/ CHICKEN", "SPAGHETTI W/ REGULAR BURGER" };
-        var mainChicken = new List<string>()
-        {"CHICKEN W/ RICE", "SPICY CHICKEN W/ RICE" };
-        var sides = new List<string>()
-        { "GUCCI FRIES", "CHOCO ICED CREAM"};
-        var sizes = new List<string>()
-             { "SMALL ", "MEDIUM ", "LARGE "};
-        var juiceTypes = new List<string>()
-        {"ORANGE JUICE", "PINEAPPLE JUICE", "ICED TEA" };
-        menu();
-        Console.WriteLine("NOTE: MAIN HAS A FIXED PRICE OF 150.00 WHILE THE SIDE HAS PRICE BASED ON ITS TYPE OR SIZE!");
-        Console.WriteLine("Press 'ENTER' to create your order.");
-        Console.ReadKey();
+        var ListOfMain = new List<string>() { "BURGER", "SPAGHETTI", "CHICKEN" };
+        var ListOfSide = new List<string>() { "FRIES", "BEVERAGE" };
+        var mainBurgers = new List<string>() { "CLASSIC CHEESEBURGER", "BACON CHEESE", "MUSHROOM SWISS BURGER", "BARBECUE BURGER", "VEGGIE BURGER", "HAWAIIAN BURGER" };
+        var mainSpaghetti = new List<string>() { "CLASSIC SPAGHETTI", "SPAGHETTI ALLA CARBONARA", };
+        var mainChicken = new List<string>() { "FRIED CHICKEN SAANDWITCH", "CHICKEN AND RICE", "CHICKEN AND WAFFLES", "NUGGETS" };
+        var sideFries = new List<string>() { "SWEET POTATO FRIES", "CHEESE FRIES", "GARLIC FRIES", "CHILI CHEESE FRIES", "REGULAR FRIES" };
+        var sideBeverage = new List<string>() { "COFFEE", "SODA", "JUICE", "SMOOTHIE", "ICE CREAM" };
+        var flavors = new List<string>() { "VANILLA", " ROCKY ROAD", "CHOCOLATE", "COOKIES AND CREAM", "DARK CHOCOLATE", "SALTED CARAMEL", "HAZELNUT" };
+        var soda = new List<string>() { "COCA-COLA", "SPRITE", "ROYAL", "PEPSI", "7UP", "MOUNTAIN DEW", "ROOT BEER" };
+        var juice = new List<string>() { "APPLE", "ORANGE", "CRANBERRY", "LEMONADE", "PINEAPPLE", "GRAPE", "TOMATO", "MANGO", "POMEGRANATE", };
+        var smoothie = new List<string>() { "MIXED BERRY SMOOTHIE", "MANGI LASSI", "CHOCOLATE AVOCADO SMOOTHIE", "GREEN SMOOTHIE" };
+        var sizes = new List<string>() { "Regular", "Double Scoop", "Short" };
+        int number = 1;
+        string combo = "Conratulations! Your Gucci Gangs combo are ";
         bool proceed = true;
+        // this is where my program flow starts :)
+        menu();
         while (proceed)
         {
-        Console.WriteLine();
-        Console.WriteLine("To make an order press 1.");
-        Console.WriteLine("To exit press 0 or any number.");
-        Console.Write("Enter your choice: ");
-        choose = Convert.ToInt32(Console.ReadLine());
-       
-            if (choose == 0)
+            select();
+            int answer = Convert.ToInt32(Console.ReadLine());
+            if (answer == 1)
             {
-                exit(choose);
-                break;
-            }
-           else if (choose == 1)
-            {
-                choosingMain();
-                Console.Write("Select your MAIN: ");
-                main = Convert.ToInt32(Console.ReadLine());
+                mainmenu(ListOfMain, number);
+                int main = Convert.ToInt32(Console.ReadLine());
                 if (main == 1)
                 {
-                    burgerMain();
-                    burger = Convert.ToInt32(Console.ReadLine());
+                    mainBurger(mainBurgers, number);
+                    int burger = Convert.ToInt32(Console.ReadLine());
                     if (burger == 1)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainBurgers[0]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main burger is " + mainBurgers[0]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 2)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 3)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-
-                                break;
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[0] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[0] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[0] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[0] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[0] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
                         }
-
-
-
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
                     }
                     else if (burger == 2)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainBurgers[1]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main burger is " + mainBurgers[1]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 2)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 3)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[1] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[1] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[1] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[1] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[1] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
                         }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
+
                     }
                     else if (burger == 3)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainBurgers[2]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main burger is " + mainBurgers[0]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[2] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[2] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[2] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[2] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[2] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                        }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 2)
+                                else if (coffeeFlavor == 2)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 3)
+                                else if (coffeeFlavor == 3)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (coffeeFlavor == 4)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
+                                else if (coffeeFlavor == 5)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 2)
+                                else if (coffeeFlavor == 6)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 3)
+                                else if (coffeeFlavor == 7)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
+                                else if (sodaType == 2)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[2]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 2)
+                                else if (sodaType == 3)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[2]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 3)
+                                else if (sodaType == 4)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[2]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (sodaType == 5)
                                 {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
+                        if (burger == 4)
+                        {
+                            Console.WriteLine("\nYour main burger is " + mainBurgers[3]);
+                            sidePart(ListOfSide, number);
+                            side = Convert.ToInt32(Console.ReadLine());
+                            if (side == 1)
+                            {
+                                sidefries(sideFries, number);
+                                int fries = Convert.ToInt32(Console.ReadLine());
+                                if (fries == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[3] + " and " + sideFries[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (fries == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[3] + " and " + sideFries[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (fries == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[3] + " and " + sideFries[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (fries == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[3] + " and " + sideFries[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (fries == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[3] + " and " + sideFries[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (side == 2)
+                            {
+                                beverage(sideBeverage, number);
+                                int beverageType = Convert.ToInt32(Console.ReadLine());
+                                if (beverageType == 1)
+                                {
+                                    coffee(flavors, sizes, number);
+                                    int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                    if (coffeeFlavor == 1)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (coffeeFlavor == 2)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (coffeeFlavor == 3)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (coffeeFlavor == 4)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (coffeeFlavor == 5)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (coffeeFlavor == 6)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (coffeeFlavor == 7)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                }
+                                else if (beverageType == 2)
+                                {
+                                    sodas(soda, sizes, number);
+                                    int sodaType = Convert.ToInt32(Console.ReadLine());
+                                    if (sodaType == 1)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[0]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (sodaType == 2)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[1]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (sodaType == 3)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (sodaType == 4)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[3]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (sodaType == 5)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (sodaType == 6)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[5]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (sodaType == 7)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + soda[6]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                }
+                                else if (beverageType == 3)
+                                {
+                                    juices(juice, sizes, number);
+                                    int juiceType = Convert.ToInt32(Console.ReadLine());
+                                    if (juiceType == 1)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[0] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 2)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[1] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 3)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[2] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 4)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[3] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 5)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[4] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 6)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[5] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 7)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[6] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 8)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[7] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                    else if (juiceType == 9)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + juice[8] + " " + sideBeverage[2]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    }
+                                }
+                                else if (beverageType == 4)
+                                {
+                                    smoothies(smoothie, sizes, number);
+                                    int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                    if (smoothieType == 1)
+                                    {
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + smoothie[0]);
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (smoothieType == 2)
+                                    {
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + smoothie[1]);
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (smoothieType == 3)
+                                    {
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + smoothie[2]);
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (smoothieType == 4)
+                                    {
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + smoothie[3]);
+                                        Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    }
+                                }
+                                else if (beverageType == 5)
+                                {
+                                    icecream(flavors, sizes, number);
+                                    int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                    if (icecreamType == 1)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (icecreamType == 2)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (icecreamType == 3)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (icecreamType == 4)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (icecreamType == 5)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (icecreamType == 6)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                    else if (icecreamType == 7)
+                                    {
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                        Console.WriteLine(combo + mainBurgers[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                        Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    else if (burger == 5)
+                    {
+                        Console.WriteLine("\nYour main burger is " + mainBurgers[4]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
+                        {
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[4] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[4] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[4] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[4] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[4] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                        }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[4] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
                         }
 
-
                     }
-                    else if (burger == 4)
+                    if (burger == 6)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainBurgers[3]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main burger is " + mainBurgers[5]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainBurgers[3] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[3]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 2)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[3]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 3)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainBurgers[3]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[5] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[5] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[5] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[5] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainBurgers[5] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Opps..Invalid input");
-                        Console.Write("Select your burger: ");
-                        burger = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainBurgers[5] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
+
                     }
                 }
                 else if (main == 2)
                 {
-                    spaghettiMain();
-                    spaghetti = Convert.ToInt32(Console.ReadLine());
+                    mainSpaghettis(mainSpaghetti, number);
+                    int spaghetti = Convert.ToInt32(Console.ReadLine());
                     if (spaghetti == 1)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainSpaghetti[0]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main spaghetti is " + mainSpaghetti[0]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 2)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 3)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-
-                                break;
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[0] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[0] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[0] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[0] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[0] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
                         }
-
-
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
                     }
                     else if (spaghetti == 2)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainSpaghetti[1]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main spaghetti is " + mainSpaghetti[1]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (friesSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 2)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chocoIceCreamSize == 3)
-                                {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 2)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else if (chosenJuice == 3)
-                                {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
-                                }
-
-                                break;
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[1] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[1] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[1] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[1] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainSpaghetti[1] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
                         }
-                    }
-                    else if (spaghetti == 3)
-                    {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainSpaghetti[2]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        else if (side == 2)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 2)
+                                else if (coffeeFlavor == 2)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 3)
+                                else if (coffeeFlavor == 3)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (coffeeFlavor == 4)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
+                                else if (coffeeFlavor == 5)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 2)
+                                else if (coffeeFlavor == 6)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 3)
+                                else if (coffeeFlavor == 7)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
+                                else if (sodaType == 2)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 2)
+                                else if (sodaType == 3)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 3)
+                                else if (sodaType == 4)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainSpaghetti[2]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (sodaType == 5)
                                 {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-
-                                break;
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainSpaghetti[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("Opps..Invalid Input");
-                        Console.Write("Select your spaghetti: ");
-                        spaghetti = Convert.ToInt32(Console.ReadLine());
+
                     }
                 }
+                //chicken sec:
                 else if (main == 3)
                 {
-                    chickenMain();
-                    chicken =Convert.ToInt32(Console.ReadLine());
+                    mainChickens(mainChicken, number);
+                    int chicken = Convert.ToInt32(Console.ReadLine());
                     if (chicken == 1)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainChicken[0]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main chicken is " + mainChicken[0]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[0] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[0] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[0] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[0] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[0] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                        }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[0]+ ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 2)
+                                else if (coffeeFlavor == 2)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 3)
+                                else if (coffeeFlavor == 3)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (coffeeFlavor == 4)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
+                                else if (coffeeFlavor == 5)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 2)
+                                else if (coffeeFlavor == 6)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 3)
+                                else if (coffeeFlavor == 7)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[0] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
+                                else if (sodaType == 2)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainChicken[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 2)
+                                else if (sodaType == 3)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainChicken[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 3)
+                                else if (sodaType == 4)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainChicken[0]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (sodaType == 5)
                                 {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-
-                                break;
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[0] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
                         }
                     }
                     else if (chicken == 2)
                     {
-                        Console.WriteLine("---------------------------------------");
-                        Console.WriteLine("Your main is " + mainChicken[1]);
-                        Console.WriteLine("---------------------------------------");
-                        sideChoice();
-                        Console.Write("Choose your Side: ");
-                        typeOfside = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine();
-                        switch (typeOfside)
+                        Console.WriteLine("\nYour main chicken is " + mainChicken[1]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
                         {
-                            case 1:
-                                sideFries();
-                                friesSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (friesSize == 1)
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[1] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[1] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[1] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[1] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[1] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                        }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 2)
+                                else if (coffeeFlavor == 2)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (friesSize == 3)
+                                else if (coffeeFlavor == 3)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[0] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lFries;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (coffeeFlavor == 4)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 2:
-                                sideIcecream();
-                                chocoIceCreamSize = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chocoIceCreamSize == 1)
+                                else if (coffeeFlavor == 5)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[0] + sides[1] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + sIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 2)
+                                else if (coffeeFlavor == 6)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[1] + sides[2] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + mIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chocoIceCreamSize == 3)
+                                else if (coffeeFlavor == 7)
                                 {
-                                    Console.WriteLine("=========================================");
-                                    Console.WriteLine("Your main is " + mainChicken[1] + ".");
-                                    Console.WriteLine("Your side is " + sizes[2] + sides[3] + ".");
-                                    Console.WriteLine("-----------------------------------------");
-                                    bill = mainDefaultPrice + lIcecream;
-                                    Console.WriteLine("Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
                                 {
-                                    Console.WriteLine("Opps..Invalid input.");
-                                    Console.Write("Select size: ");
-                                    friesSize = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                break;
-                            case 3:
-                                sideJuice();
-                                chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine();
-                                if (chosenJuice == 1)
+                                else if (sodaType == 2)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainChicken[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[0] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 2)
+                                else if (sodaType == 3)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainChicken[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[1] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else if (chosenJuice == 3)
+                                else if (sodaType == 4)
                                 {
-                                    Console.WriteLine("--------------------------------------------");
-                                    Console.WriteLine("Your main is " + mainChicken[1]);
-                                    Console.WriteLine("Your side is " + juiceTypes[2] + ".");
-                                    Console.WriteLine("--------------------------------------------");
-                                    bill = mainDefaultPrice + juicePrice;
-                                    Console.WriteLine(" Your bill total is: " + bill);
-                                    payment(bill);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-                                else
+                                else if (sodaType == 5)
                                 {
-                                    Console.WriteLine("Oops.. invalid input! ");
-                                    Console.WriteLine("Select your juice: ");
-                                    chosenJuice = Convert.ToInt32(Console.ReadLine());
-                                    Console.WriteLine();
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
                                 }
-
-                                break;
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[1] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
                         }
                     }
-                    else
+                    else if (chicken == 3)
                     {
-                        Console.WriteLine();
-                        Console.WriteLine("Opps..Invalid Input");
-                        Console.Write("Select your chicken: ");
-                        chicken = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("\nYour main chicken is " + mainChicken[2]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
+                        {
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[2] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[2] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[2] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[2] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[2] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                        }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[2] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
                     }
+                    else if (chicken == 4)
+                    {
+                        Console.WriteLine("\nYour main chicken is " + mainChicken[3]);
+                        sidePart(ListOfSide, number);
+                        int side = Convert.ToInt32(Console.ReadLine());
+                        if (side == 1)
+                        {
+                            sidefries(sideFries, number);
+                            int fries = Convert.ToInt32(Console.ReadLine());
+                            if (fries == 1)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[3] + " and " + sideFries[1]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 2)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[3] + " and " + sideFries[2]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 3)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[3] + " and " + sideFries[3]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 4)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[3] + " and " + sideFries[4]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                            else if (fries == 5)
+                            {
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                Console.WriteLine(combo + mainChicken[3] + " and " + sideFries[5]);
+                                Console.WriteLine("-----------------------------------------------------------------------------------------");
+                            }
+                        }
+                        else if (side == 2)
+                        {
+                            beverage(sideBeverage, number);
+                            int beverageType = Convert.ToInt32(Console.ReadLine());
+                            if (beverageType == 1)
+                            {
+                                coffee(flavors, sizes, number);
+                                int coffeeFlavor = Convert.ToInt32(Console.ReadLine());
+                                if (coffeeFlavor == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[0] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[1] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[2] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[4] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[5] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (coffeeFlavor == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[6] + " " + sideBeverage[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 2)
+                            {
+                                sodas(soda, sizes, number);
+                                int sodaType = Convert.ToInt32(Console.ReadLine());
+                                if (sodaType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[0]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[1]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[3]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[5]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (sodaType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + soda[6]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 3)
+                            {
+                                juices(juice, sizes, number);
+                                int juiceType = Convert.ToInt32(Console.ReadLine());
+                                if (juiceType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[0] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[1] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[2] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[3] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[4] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[5] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[6] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 8)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[7] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                                else if (juiceType == 9)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + juice[8] + " " + sideBeverage[2]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 4)
+                            {
+                                smoothies(smoothie, sizes, number);
+                                int smoothieType = Convert.ToInt32(Console.ReadLine());
+                                if (smoothieType == 1)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + smoothie[0]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 2)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + smoothie[1]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 3)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + smoothie[2]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                                else if (smoothieType == 4)
+                                {
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + smoothie[3]);
+                                    Console.WriteLine("----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                            else if (beverageType == 5)
+                            {
+                                icecream(flavors, sizes, number);
+                                int icecreamType = Convert.ToInt32(Console.ReadLine());
+                                if (icecreamType == 1)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 2)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 3)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 4)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 5)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 6)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                                else if (icecreamType == 7)
+                                {
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                    Console.WriteLine(combo + mainChicken[3] + " and " + flavors[3] + " " + sideBeverage[4]);
+                                    Console.WriteLine("-----------------------------------------------------------------------------------------------");
+                                }
+                            }
+                        }
+                    }
+
                 }
-
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Opps..Invalid Input");
-                    Console.Write("Select Main: ");
-                    main = Convert.ToInt32(Console.ReadLine());
-
-                }
-          
-
-            }
-            else
-            {
-                Console.WriteLine("Opps..Invalid Input");
-                Console.Write("Enter your choice: ");
-                choose = Convert.ToInt32(Console.ReadLine());
             }
         }
-
     }
+        static void menu()
+        {
+            Console.WriteLine("**************************-WELCOME TO GUCCIGANGS MIX AND MATCH-**************************");
 
-    static void menu()
+            Console.WriteLine();
+            Console.WriteLine("                             GUCCIGANG'S MIX AND MATCH!");
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("Step 1: CHOOSE YOUR MAIN");
+            Console.WriteLine();
+            Console.WriteLine("                      BURGER              SPAGHETTI                 CHICKEN");
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+            Console.WriteLine("Step 2: CHOOSE YOUR SIDE");
+            Console.WriteLine();
+            Console.WriteLine("                      FRIES               ICE CREAM                 BEVERAGE  ");
+            Console.WriteLine("-----------------------------------------------------------------------------------------");
+        }
+        static void select()
+        {
+            Console.Write("Press 1 to create your order: ");
+        }
+        static void mainmenu(List<string> ListOfMain, int number)
+        {
+            Console.WriteLine("\nStep 1: CHOOSE YOUR MAIN");
+            foreach (string main in ListOfMain)
+            {
+                Console.WriteLine(number + ". " + main);
+                number++;
+            }
+            Console.Write("Select your main: ");
+        }
+        static void mainBurger(List<string> mainBurgers, int number)
+        {
+
+            Console.WriteLine("\nWhat kind of burger do you like?");
+            foreach (string burger in mainBurgers)
+            {
+                Console.WriteLine(number + ". " + burger);
+                number++;
+            }
+            Console.Write("Select your burger: ");
+        }
+    static void mainSpaghettis(List<string> mainSpaghetti, int number)
     {
-        Console.WriteLine(" ***************-WELCOME TO GUCCIGANGS MIX AND MATCH-***************");
-        Console.WriteLine();
-        Console.WriteLine("                    GUCCIGANG'S MIX AND MATCH!");
-        Console.WriteLine("--------------------------------------------------------------------");
-        Console.WriteLine("Step 1: CHOOSE YOUR MAIN w/a fixed price of 150 pesos only!");
-        Console.WriteLine();
-        Console.WriteLine("           BURGER              SPAGHETTI                 CHICKEN");
-        Console.WriteLine("--------------------------------------------------------------------");
-        Console.WriteLine("Step 2: CHOOSE YOUR SIDE");
-        Console.WriteLine();
-        Console.WriteLine("           FRIES               ICE CREAM                 BEVERAGE  ");
-        Console.WriteLine("--------------------------------------------------------------------");
-    }
 
-    static void choosingMain()
-    {
-        Console.WriteLine("--------------------------------------------------------------------");
-        Console.WriteLine("Step 1: CHOOSE YOUR MAIN w/a fixed price of 150 pesos only!");
-        Console.WriteLine();
-        Console.WriteLine("           BURGER              SPAGHETTI                 CHICKEN");
-        Console.WriteLine("--------------------------------------------------------------------");
-        Console.WriteLine("Press 1 for Burger.");
-        Console.WriteLine("Press 2 for Spaghetti.");
-        Console.WriteLine("Press 3 for Chicken.");
-    }
-    static void exit(int choose)
-    {
-        Console.WriteLine();
-        Console.WriteLine("Thanks for visiting us! \nWe will wait for you to comeback.");
-        Console.WriteLine();
-
-    }
-    static void burgerMain()
-    {
-
-        Console.WriteLine("==================================");
-        Console.WriteLine("   b1 - DOUBLE PATTY BURGER ");
-        Console.WriteLine("   b2 - DOUBLE CHICKEN BURGER");
-        Console.WriteLine("   b3 - VEGGIE BURGER");
-        Console.WriteLine("   b4 - ROYALE BURGER");
-        Console.WriteLine("==================================");
-        Console.WriteLine("Press 1 for b1 ");
-        Console.WriteLine("Press 2 for b2 ");
-        Console.WriteLine("Press 3 for b3 ");
-        Console.WriteLine("Press 4 for b4 ");
-        Console.Write("Select your burger: ");
-
-
-    }
-    static void spaghettiMain()
-    {
-        Console.WriteLine("==================================");
-        Console.WriteLine("   s1 - REGULAR SPAGHETTI");
-        Console.WriteLine("   s2 - SPAGHETTI W/ CHICKEN");
-        Console.WriteLine("   s3 - SPAGHETTI W/ REGULAR BURGER");
-        Console.WriteLine("==================================");
-        Console.WriteLine("Press 1 for s1 ");
-        Console.WriteLine("Press 2 for s2 ");
-        Console.WriteLine("Press 3 for s3 ");
+        Console.WriteLine("\nWhat kind of spaghetti do you like?");
+        foreach (string spaghetti in mainSpaghetti)
+        {
+            Console.WriteLine(number + ". " + spaghetti);
+            number++;
+        }
         Console.Write("Select your spaghetti: ");
     }
-    static void chickenMain()
+    static void mainChickens(List<string> mainChicken, int number)
     {
-        Console.WriteLine("==================================");
-        Console.WriteLine("   c1 - CHICKEN W/ RICE ");
-        Console.WriteLine("   c2 -SPICY CHICKEN W/ RICE");
-        Console.WriteLine("==================================");
-        Console.WriteLine("Press 1 for c1 ");
-        Console.WriteLine("Press 2 for c2 ");
+
+        Console.WriteLine("\nWhat kind of chicken do you like?");
+        foreach (string chicken in mainChicken)
+        {
+            Console.WriteLine(number + ". " + chicken);
+            number++;
+        }
         Console.Write("Select your chicken: ");
     }
-    static void sideChoice()
-    {
-        Console.Write("You are now going to select your Side. \n Press 1 to 'Continue': ");
-        int side = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine();
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine("Step 2 choose your SIDE: ");
-        Console.WriteLine("  FRIES       ICE CREAM   BEVERAGE  ");
-        Console.WriteLine("---------------------------------");
-        Console.WriteLine("Press 1 for Fries");
-        Console.WriteLine("Press 2 for Icream");
-        Console.WriteLine("Press 3 for BEVERAGE");
-    }
-    static void sideFries()
-    {
-        Console.WriteLine("YOU CHOOSE GUCCI FRIES AS YOUR SIDE.");
-        Console.WriteLine("=======================================");
-        Console.WriteLine("Size:            Price:");
-        Console.WriteLine("SMALL            45.00");
-        Console.WriteLine("MEDIUM           55.00");
-        Console.WriteLine("LARGE            65.00");
-        Console.WriteLine("========================================");
-        Console.WriteLine("Press  1 for small.");
-        Console.WriteLine("Press  2 for medium.");
-        Console.WriteLine("Press  3 for large.");
-        Console.Write("Select size: ");
-    }
-    static void sideIcecream()
-    {
-        Console.WriteLine("YOU CHOCO ICE CREAM AS YOUR SIDE.");
-        Console.WriteLine("=======================================");
-        Console.WriteLine("Size:            Price:");
-        Console.WriteLine("SMALL            35.00");
-        Console.WriteLine("MEDIUM           45.00");
-        Console.WriteLine("LARGE            55.00");
-        Console.WriteLine("========================================");
-        Console.WriteLine("Press  1 for small.");
-        Console.WriteLine("Press  2 for medium.");
-        Console.WriteLine("Press  3 for large.");
-        Console.WriteLine();
-        Console.Write("Select size: ");
-    }
-    static void sideJuice()
-    {
-        Console.WriteLine("CHOOSE ANY OF THESE JUICES AS YOUR SIDE.");
-        Console.WriteLine("===================================");
-        Console.WriteLine("                             Price:");
-        Console.WriteLine("ORANGE JUICE       500ml     70.00");
-        Console.WriteLine("PINEAPPLE JUICE    500ml     70.00");
-        Console.WriteLine("ICED TEA           500ml     70.00");
-        Console.WriteLine("====================================");
-        Console.WriteLine("Press 1 for ORANGE JUICE");
-        Console.WriteLine("Press 2 for PINEAPPLE JUICE");
-        Console.WriteLine("Press 3 for ICED TEA");
-    }
-    static void payment(int bill)
-    {
-        Console.Write("Enter your payment: ");
-        int payment = Convert.ToInt32(Console.ReadLine());
-        int change = payment - bill;
-        Console.WriteLine("Change: " + change);
-        Console.WriteLine("=========================================");
-        Console.WriteLine("Thanks for your order!");
-        Console.WriteLine();
-    }
-}
+    static void sidePart(List<string> ListOfSide, int number)
+        {
+            Console.WriteLine("\nStep 2: CHOOSE YOUR SIDE");
+            foreach (string side in ListOfSide)
+            {
+                Console.WriteLine(number + ". " + side);
+                number++;
+            }
+            Console.Write("Select your side: ");
+        }
 
 
+        static void sidefries(List<string> sideFries, int number)
+        {
 
-
+            Console.WriteLine("\nWhat kind of fries do you like?");
+            foreach (string fries in sideFries)
+            {
+                Console.WriteLine(number + ". " + fries);
+                number++;
+            }
+            Console.Write("Select your fries: ");
+        }
+        static void beverage(List<string> sideBeverage, int number)
+        {
+            Console.WriteLine("\nChoose the type of beverage that you want.");
+            foreach (string beverage in sideBeverage)
+            {
+                Console.WriteLine(number + ". " + beverage);
+                number++;
+            }
+            Console.Write("Select your beverage: ");
+        }
+        static void coffee(List<string> flavors, List<string> sizes,int number)
+        {
+            Console.WriteLine("\nThe only available size for coffee is "+ sizes[2]);
+            Console.WriteLine("What is the flavor of your coffee?");
+            foreach (string flavor in flavors)
+            {
+                Console.WriteLine(number + ". " + flavor);
+                number++;
+            }
+            Console.Write("Select flavor: ");
+        }
+        static void sodas(List<string> soda, List<string> sizes, int number)
+        {
+            Console.WriteLine("\nThe only available size for soda is " + sizes[0]);
+            Console.WriteLine("What is the flavor of your coffee?");
+            foreach (string sodaType in soda)
+            {
+                Console.WriteLine(number + ". " + sodaType);
+                number++;
+            }
+            Console.Write("Select flavor: ");
+        }
+        static void juices(List<string> juice, List<string> sizes, int number)
+        {
+            Console.WriteLine("\nThe only available size for juice is " + sizes[0]);
+            Console.WriteLine("What kind of juice do you like?");
+            foreach (string juiceType in juice)
+            {
+                Console.WriteLine(number + ". " + juiceType);
+                number++;
+            }
+            Console.Write("Select your juice: ");
+        }
+        static void smoothies(List<string> smothie, List<string> sizes, int number)
+        {
+            Console.WriteLine("\nThe only available size for smoothie is " + sizes[0]);
+            Console.WriteLine("What kind of juice do you like?");
+            foreach (string smoothieType in smothie)
+            {
+                Console.WriteLine(number + ". " + smoothieType);
+                number++;
+            }
+            Console.Write("Select your smoothie: ");
+        }
+        static void icecream(List<string> flavors, List<string> sizes, int number)
+        {
+            Console.WriteLine("\nThe only available size for ice cream is is " + sizes[1]);
+            Console.WriteLine("What kind of ice cream do you like?");
+            foreach (string flavor in flavors)
+            {
+                Console.WriteLine(number + ". " + flavor);
+            number++;
+            }
+            Console.Write("Select your ice cream: ");
+        }
+    }
