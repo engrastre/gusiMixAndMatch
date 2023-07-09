@@ -6,7 +6,7 @@ class Program {
         var ListOfMain = new List<string>() { "BURGER", "SPAGHETTI", "CHICKEN" };
         var ListOfSide = new List<string>() { "FRIES", "BEVERAGE" };
         var mainBurgers = new List<string>() { "CLASSIC CHEESEBURGER", "BACON CHEESE", "MUSHROOM SWISS BURGER", "BARBECUE BURGER", "VEGGIE BURGER", "HAWAIIAN BURGER" };
-        var mainSpaghetti = new List<string>() { "CLASSIC SPAGHETTI", "SPAGHETTI ALLA CARBONARA", };
+        var mainSpaghetti = new List<string>() { "CLASSIC SPAGHETTI", "SPAGHETTI ALLA CARBONARA"};
         var mainChicken = new List<string>() { "FRIED CHICKEN SAANDWITCH", "CHICKEN AND RICE", "CHICKEN AND WAFFLES", "NUGGETS" };
         var sideFries = new List<string>() { "SWEET POTATO FRIES", "CHEESE FRIES", "GARLIC FRIES", "CHILI CHEESE FRIES", "REGULAR FRIES" };
         var sideBeverage = new List<string>() { "COFFEE", "SODA", "JUICE", "SMOOTHIE", "ICE CREAM" };
