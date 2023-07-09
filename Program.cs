@@ -3366,7 +3366,7 @@ class Program {
             Console.WriteLine("-----------------------------------------------------------------------------------------");
             Console.WriteLine("Step 2: CHOOSE YOUR SIDE");
             Console.WriteLine();
-            Console.WriteLine("                      FRIES               ICE CREAM                 BEVERAGE  ");
+            Console.WriteLine("                                FRIES                        BEVERAGE  ");
             Console.WriteLine("-----------------------------------------------------------------------------------------");
         }
         static void select()
